@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Simples</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff; /* Azul claro */
+        }
+        .calculadora {
+            width: 320px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .visor {
+            background-color: #333333;
+            color: #ffffff;
+            font-size: 36px;
+            padding: 20px;
+            text-align: right;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .botoes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+        }
+        button {
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            background-color: #f9f9f9;
+            transition: background-color 0.2s ease;
+        }
+        button:hover {
+            background-color: #e0e0e0;
+        }
+        button:active {
+            background-color: #d0d0d0;
+        }
+        .operador {
+            background-color: #ff9500; /* Laranja */
+            color: #ffffff;
+        }
+        .operador:hover {
+            background-color: #e08900;
+        }
+        .igual {
+            background-color: #34c759; /* Verde */
+            color: #ffffff;
+            grid-column: span 1;
+        }
+        .igual:hover {
+            background-color: #2da94f;
+        }
+        .limpar {
+            background-color: #ff3b30; /* Vermelho */
+            color: #ffffff;
+        }
+        .limpar:hover {
+            background-color: #e63329;
+        }
+        .numero {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculadora">
+        <div class="visor" id="visor">0</div>
+        <div class="botoes">
+            <button class="operador" data-operador="+">+</button>
+            <button class="operador" data-operador="-">-</button>
+            <button class="operador" data-operador="*">×</button>
+            <button class="operador" data-operador="/">÷</button>
+            <button class="numero" data-numero="7">7</button>
+            <button class="numero" data-numero="8">8</button>
+            <button class="numero" data-numero="9">9</button>
+            <button class="igual">=</button>
+            <button class="numero" data-numero="4">4</button>
+            <button class="numero" data-numero="5">5</button>
+            <button class="numero" data-numero="6">6</button>
+            <button class="limpar">AC</button>
+            <button class="numero" data-numero="1">1</button>
+            <button class="numero" data-numero="2">2</button>
+            <button class="numero" data-numero="3">3</button>
+            <button class="numero" data-numero="0" style="grid-column: span 2;">0</button>
+            <button class="numero" data-numero=".">.</button>
+        </div>
+    </div>
+
+    <script>
+        const visor = document.getElementById('visor');
+        const botoes = document.querySelectorAll('button');
+        let entradaAtual = '';
+        let entradaAnterior = '';
+        let operador = '';
+
+        function atualizarVisor(valor) {
+            visor.textContent = valor || '0';
+        }
+
+        botoes.forEach(botao => {
+            botao.addEventListener('click', () => {
+                if (botao.classList.contains('numero')) {
+                    entradaAtual += botao.getAttribute('data-numero');
+                    atualizarVisor(entradaAtual);
+                } else if (botao.classList.contains('operador')) {
+                    if (entradaAtual) {
+                        entradaAnterior = entradaAtual;
+                        entradaAtual = '';
+                    }
+                    operador = botao.getAttribute('data-operador');
+                } else if (botao.classList.contains('igual')) {
+                    if (entradaAnterior && entradaAtual && operador) {
+                        let resultado = 0;
+                        switch (operador) {
+                            case '+':
+                                resultado = parseFloat(entradaAnterior) + parseFloat(entradaAtual);
+                                break;
+                            case '-':
+                                resultado = parseFloat(entradaAnterior) - parseFloat(entradaAtual);
+                                break;
+                            case '*':
+                                resultado = parseFloat(entradaAnterior) * parseFloat(entradaAtual);
+                                break;
+                            case '/':
+                                resultado = parseFloat(entradaAnterior) / parseFloat(entradaAtual);
+                                break;
+                        }
+                        atualizarVisor(resultado);
+                        entradaAnterior = resultado.toString();
+                        entradaAtual = '';
+                        operador = '';
+                    }
+                } else if (botao.classList.contains('limpar')) {
+                    entradaAtual = '';
+                    entradaAnterior = '';
+                    operador = '';
+                    atualizarVisor('0');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
