@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Números Primos em um Intervalo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        input {
+            margin: 10px;
+            padding: 8px;
+            font-size: 16px;
+            width: 120px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #resultado {
+            font-size: 20px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .erro {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Encontrar Números Primos</h1>
+    <label for="inicio">Início do Intervalo:</label>
+    <input type="number" id="inicio" placeholder="Ex: 10">
+    <br>
+    <label for="fim">Fim do Intervalo:</label>
+    <input type="number" id="fim" placeholder="Ex: 50">
+    <br>
+    <button id="botaoEncontrar">Encontrar Primos</button>
+    <div id="resultado">Resultado: </div>
+
+    <script>
+        const botaoEncontrar = document.getElementById("botaoEncontrar");
+        const resultadoDiv = document.getElementById("resultado");
+
+        function ehPrimo(numero) {
+            if (numero < 2) return false;
+            for (let i = 2; i <= Math.sqrt(numero); i++) {
+                if (numero % i === 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function encontrarPrimosNoIntervalo(inicio, fim) {
+            const primos = [];
+            for (let i = inicio; i <= fim; i++) {
+                if (ehPrimo(i)) {
+                    primos.push(i);
+                }
+            }
+            return primos;
+        }
+
+        function handleCliqueBotao() {
+            const inicioInput = document.getElementById("inicio");
+            const fimInput = document.getElementById("fim");
+
+            const inicio = parseInt(inicioInput.value);
+            const fim = parseInt(fimInput.value);
+
+            if (isNaN(inicio) || isNaN(fim) || inicio > fim) {
+                resultadoDiv.textContent = "Erro: insira valores válidos e certifique-se de que início <= fim.";
+                resultadoDiv.classList.add("erro");
+                return;
+            }
+
+            const primos = encontrarPrimosNoIntervalo(inicio, fim);
+
+            if (primos.length > 0) {
+                resultadoDiv.textContent = "Números primos no intervalo: " + primos.join(", ");
+                resultadoDiv.classList.remove("erro");
+            } else {
+                resultadoDiv.textContent = "Nenhum número primo encontrado no intervalo.";
+                resultadoDiv.classList.add("erro");
+            }
+        }
+
+        botaoEncontrar.addEventListener("click", handleCliqueBotao);
+    </script>
+</body>
+</html>
