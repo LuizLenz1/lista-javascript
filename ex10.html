@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checador de Palíndromos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 250px;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #resultado {
+            font-size: 20px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+        .erro {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Checador de Palíndromos</h1>
+    <label for="texto">Digite uma palavra ou frase:</label>
+    <input type="text" id="texto" placeholder="Ex: ovo">
+    <br>
+    <button id="botaoChecar">Checar</button>
+    <div id="resultado">Resultado: </div>
+
+    <script>
+        function verificarPalindromo(texto) {
+            const textoFormatado = texto.replace(/[^\w]/g, '').toLowerCase(); // Remove caracteres especiais e espaços
+            const textoInvertido = textoFormatado.split('').reverse().join('');
+            return textoFormatado === textoInvertido;
+        }
+
+        function aoClicar() {
+            const textoInput = document.getElementById("texto");
+            const texto = textoInput.value.trim();
+
+            if (!texto) {
+                resultadoDiv.textContent = "Erro: por favor, insira uma palavra ou frase.";
+                resultadoDiv.classList.add("erro");
+                return;
+            }
+
+            const resultadoDiv = document.getElementById("resultado");
+
+            if (verificarPalindromo(texto)) {
+                resultadoDiv.textContent = "Resultado: É um palíndromo!";
+                resultadoDiv.classList.remove("erro");
+            } else {
+                resultadoDiv.textContent = "Resultado: Não é um palíndromo.";
+                resultadoDiv.classList.add("erro");
+            }
+        }
+
+        const botaoChecar = document.getElementById("botaoChecar");
+        botaoChecar.addEventListener("click", aoClicar);
+    </script>
+</body>
+</html>
