@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteador de Números</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #007BFF;
+        }
+        button {
+            padding: 12px 24px;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        ul {
+            margin-top: 20px;
+            padding: 0;
+            list-style-type: none;
+        }
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Sorteador de Números</h2>
+        <button id="botaoSortear">Sortear Número</button>
+        <ul id="listaNumeros"></ul>
+    </div>
+
+    <script>
+        const numerosSorteados = [];
+
+        document.getElementById('botaoSortear').addEventListener('click', function() {
+            const numeroSorteado = Math.floor(Math.random() * 101); // Gera um número entre 0 e 100
+            numerosSorteados.push(numeroSorteado);
+
+            const listaNumeros = document.getElementById('listaNumeros');
+            const itemLista = document.createElement('li');
+            itemLista.textContent = `Número sorteado: ${numeroSorteado}`;
+            listaNumeros.appendChild(itemLista);
+        });
+    </script>
+</body>
+</html>
