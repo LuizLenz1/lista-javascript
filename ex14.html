@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Cores Aleatórias</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+        .container-cores {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .bloco-cor {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+        .bloco-cor:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-cores" id="containerCores"></div>
+    
+    <script>
+        const containerCores = document.getElementById("containerCores");
+
+        function gerarCorAleatoria() {
+            const letras = "0123456789ABCDEF";
+            let cor = "#";
+            for (let i = 0; i < 6; i++) {
+                cor += letras[Math.floor(Math.random() * 16)];
+            }
+            return cor;
+        }
+
+        function randomizarCores() {
+            const blocos = document.querySelectorAll(".bloco-cor");
+            blocos.forEach(bloco => {
+                const novaCor = gerarCorAleatoria();
+                bloco.style.backgroundColor = novaCor;
+                bloco.textContent = novaCor;
+            });
+        }
+
+        function criarBlocosDeCor(quantidade) {
+            for (let i = 0; i < quantidade; i++) {
+                const bloco = document.createElement("div");
+                bloco.classList.add("bloco-cor");
+                bloco.style.backgroundColor = "#FFFFFF";
+                bloco.textContent = "#FFFFFF";
+                containerCores.appendChild(bloco);
+            }
+        }
+
+        criarBlocosDeCor(5);
+
+        document.addEventListener("keydown", (event) => {
+            if (event.code === "Space") {
+                event.preventDefault();
+                randomizarCores();
+            }
+        });
+
+        randomizarCores();
+    </script>
+</body>
+</html>
